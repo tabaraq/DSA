@@ -43,20 +43,21 @@ public class LongestSubstringWithoutRepeatingCharacter {
             return n;
         }
 
-        int result = 0;
-        int start = 0;
+        int maxLength = 0;
+        int windowStart = 0;
 
-        Map<Character, Integer> map = new HashMap<>();
+        Map<Character, Integer> charFreqMap = new HashMap<>();
 
-        for (int end = 0; end < n; end++) {
-            if (map.containsKey(s.charAt(end))) {
-                start = Math.max(start, map.get(s.charAt(end)) + 1);
+        for (int windowEnd = 0; windowEnd < n; windowEnd++) {
+            char rightChar = s.charAt(windowEnd);
+            if (charFreqMap.containsKey(rightChar)) {
+                windowStart = Math.max(windowStart, charFreqMap.get(s.charAt(windowEnd)) + 1);
             }
-            map.put(s.charAt(end), end);
-            result = Math.max(result, end - start + 1);
+            charFreqMap.put(s.charAt(windowEnd), windowEnd);
+            maxLength = Math.max(maxLength, windowEnd - windowStart + 1);
         }
 
-        return result;
+        return maxLength;
     }
 
     public static void main(String[] args) {
